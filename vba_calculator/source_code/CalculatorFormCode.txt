@@ -1,0 +1,57 @@
+' Reference UserForm code.
+' Create a UserForm named frmCalculator and add:
+' txtNum1, txtNum2 (TextBoxes)
+' lblResult (Label)
+' cmdAdd, cmdSub, cmdMul, cmdDiv, cmdClear, cmdExit (CommandButtons)
+
+Option Explicit
+
+Private Function InputsAreValid() As Boolean
+    If Trim$(txtNum1.Value) = "" Or Trim$(txtNum2.Value) = "" Then
+        MsgBox "Please enter both numbers.", vbExclamation, "Missing input"
+        Exit Function
+    End If
+
+    If Not IsNumeric(txtNum1.Value) Or Not IsNumeric(txtNum2.Value) Then
+        MsgBox "Please enter valid numbers.", vbExclamation, "Invalid input"
+        Exit Function
+    End If
+
+    InputsAreValid = True
+End Function
+
+Private Sub cmdAdd_Click()
+    If Not InputsAreValid Then Exit Sub
+    lblResult.Caption = "Result: " & (CDbl(txtNum1.Value) + CDbl(txtNum2.Value))
+End Sub
+
+Private Sub cmdSub_Click()
+    If Not InputsAreValid Then Exit Sub
+    lblResult.Caption = "Result: " & (CDbl(txtNum1.Value) - CDbl(txtNum2.Value))
+End Sub
+
+Private Sub cmdMul_Click()
+    If Not InputsAreValid Then Exit Sub
+    lblResult.Caption = "Result: " & (CDbl(txtNum1.Value) * CDbl(txtNum2.Value))
+End Sub
+
+Private Sub cmdDiv_Click()
+    If Not InputsAreValid Then Exit Sub
+
+    If CDbl(txtNum2.Value) = 0 Then
+        MsgBox "Cannot divide by zero.", vbExclamation, "Math error"
+        Exit Sub
+    End If
+
+    lblResult.Caption = "Result: " & (CDbl(txtNum1.Value) / CDbl(txtNum2.Value))
+End Sub
+
+Private Sub cmdClear_Click()
+    txtNum1.Value = ""
+    txtNum2.Value = ""
+    lblResult.Caption = "Result: 0"
+End Sub
+
+Private Sub cmdExit_Click()
+    Unload Me
+End Sub
